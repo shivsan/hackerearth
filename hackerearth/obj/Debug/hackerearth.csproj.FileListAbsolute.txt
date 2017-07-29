@@ -1,0 +1,6 @@
+c:\users\siva\documents\visual studio 2015\Projects\hackerearth\hackerearth\bin\Debug\hackerearth.exe.config
+C:\Users\Siva\Documents\Visual Studio 2015\Projects\hackerearth\hackerearth\bin\Debug\hackerearth.exe
+C:\Users\Siva\Documents\Visual Studio 2015\Projects\hackerearth\hackerearth\bin\Debug\hackerearth.pdb
+C:\Users\Siva\Documents\Visual Studio 2015\Projects\hackerearth\hackerearth\obj\Debug\hackerearth.csprojResolveAssemblyReference.cache
+C:\Users\Siva\Documents\Visual Studio 2015\Projects\hackerearth\hackerearth\obj\Debug\hackerearth.exe
+C:\Users\Siva\Documents\Visual Studio 2015\Projects\hackerearth\hackerearth\obj\Debug\hackerearth.pdb
