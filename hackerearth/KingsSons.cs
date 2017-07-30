@@ -33,7 +33,7 @@ namespace ConsoleApplication1
         public new int CityNumber { get; set; }
 
         public List<City> Cities { get; set; }
-
+        
         public CityNode(int cityNumber)
         {
             CityNumber = cityNumber;

@@ -1,28 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace hackerearth
 {
     public static class SimpleKingsSons
     {
+        public enum Ruler
+        {
+            N,
+            B,
+            R
+        }
+
         //public static int[] cities;
         public static int Count;
         public static List<int>[] LinkedCities;
-        public static Ruler[] CityRulers;
+        public static Ruler[] Rulers;
         
         public static long Compute(int currentNode)
         {
             if (currentNode >= Count)
                 return CheckIfGraphIsValid() ? 1 : 0;
 
-            CityRulers[currentNode] = Ruler.B;
+            Rulers[currentNode] = Ruler.B;
 
             var l = Compute(currentNode + 1);
 
-            CityRulers[currentNode] = Ruler.R;
+            Rulers[currentNode] = Ruler.R;
 
             var r = Compute(currentNode + 1);
 
@@ -31,21 +35,41 @@ namespace hackerearth
 
         public static void BuildLinks(List<Tuple<int, int>> links)
         {
-            CityRulers = new Ruler[Count];
+            Rulers = new Ruler[Count];
             LinkedCities = new List<int>[Count];
 
             for (int i = 0; i < Count; i++)
                 LinkedCities[i] = new List<int>();
-            
+
             foreach (var link in links)
             {
                 LinkedCities[link.Item1 - 1].Add(link.Item2 - 1);
+                LinkedCities[link.Item2 - 1].Add(link.Item1 - 1);
             }
         }
 
         public static bool IsDisputed(int cityNumber)
         {
-            return !LinkedCities[cityNumber].All(c => CityRulers[c - 1].Equals(GetEnemy(CityRulers[cityNumber])));
+            var enemy = GetEnemy(Rulers[cityNumber]);
+            var linkedCities = LinkedCities[cityNumber];
+
+            foreach (var linkedCity in linkedCities)
+                if (!Rulers[linkedCity].Equals(enemy))
+                    return false;
+
+            return true;
+        }
+
+        public static bool AreAllNeigboursEnemies(int cityNumber)
+        {
+            var enemy = GetEnemy(Rulers[cityNumber]);
+            var neighbours = LinkedCities[cityNumber];
+
+            foreach (var neighbour in neighbours)
+                if (!Rulers[neighbour].Equals(enemy))
+                    return false;
+
+            return true;
         }
 
         public static Ruler? GetEnemy(Ruler ruler)
@@ -63,7 +87,11 @@ namespace hackerearth
         
         public static bool CheckIfGraphIsValid()
         {
-            return Enumerable.Range(0, Count - 1).Any(i => IsDisputed(i));
+            for (int i = 0; i < Count; i++)
+                if (IsDisputed(i))
+                    return false;
+
+            return true;
         }
     }
 }
