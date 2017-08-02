@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Data.cs" />
     <Compile Include="KingsSons.cs" />
+    <Compile Include="KingsSonsGraphTraversal.cs" />
+    <Compile Include="PassordCracker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleKingsSons.cs" />

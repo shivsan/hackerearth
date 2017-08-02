@@ -1,9 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace hackerearth
 {
-    public static class SimpleKingsSons
+    public struct City{
+        public KingsSonsGraphTraversal.Ruler ruler;
+        public int cityNumber;
+    }
+
+    public static class KingsSonsGraphTraversal
     {
         public enum Ruler
         {
@@ -11,27 +19,12 @@ namespace hackerearth
             B,
             R
         }
- 
+
         //public static int[] cities;
         public static int Count;
         public static List<int>[] LinkedCities;
         public static Ruler[] Rulers;
-        
-        public static long Compute(int currentNode)
-        {
-            if (currentNode >= Count)
-                return CheckIfGraphIsValid() ? 1 : 0;
-
-            Rulers[currentNode] = Ruler.B;
-
-            var l = Compute(currentNode + 1);
-
-            Rulers[currentNode] = Ruler.R;
-
-            var r = Compute(currentNode + 1);
-
-            return l + r;
-        }
+        public static Dictionary<List<City>, bool> memo = new Dictionary<List<City>, bool>();
 
         public static void BuildLinks(List<Tuple<int, int>> links)
         {
@@ -60,21 +53,9 @@ namespace hackerearth
             return true;
         }
 
-        public static bool AreAllNeigboursEnemies(int cityNumber)
-        {
-            var enemy = GetEnemy(Rulers[cityNumber]);
-            var neighbours = LinkedCities[cityNumber];
-
-            foreach (var neighbour in neighbours)
-                if (!Rulers[neighbour].Equals(enemy))
-                    return false;
-
-            return true;
-        }
-
         public static Ruler? GetEnemy(Ruler ruler)
         {
-            switch(ruler)
+            switch (ruler)
             {
                 case Ruler.B:
                     return Ruler.R;
@@ -84,7 +65,7 @@ namespace hackerearth
 
             return null;
         }
-        
+
         public static bool CheckIfGraphIsValid()
         {
             for (int i = 0; i < Count; i++)
@@ -92,6 +73,20 @@ namespace hackerearth
                     return false;
 
             return true;
+        }
+
+        //public static long Traverse(int nodeNumber, int lastNodeNumber)
+        //{
+             
+        //}
+
+        public static bool IsSetValid(List<City> citySet)
+        {
+            return citySet.Any(cs => LinkedCities[cs.cityNumber].All(lc => Rulers[lc].Equals(GetEnemy(cs.ruler))));
+
+            //foreach(var city in citySet)
+            //    //GetEnemy(city.ruler)
+            //    if (LinkedCities[city.cityNumber].All)
         }
     }
 }
